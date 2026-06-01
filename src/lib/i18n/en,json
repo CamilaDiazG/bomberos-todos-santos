@@ -1,0 +1,66 @@
+{
+  "common": {
+    "donate": "Donate",
+    "learn_more": "Learn more",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "meta": {
+    "home": {
+      "title": "Todos Santos Fire Department | Protecting our community",
+      "description": "Volunteer firefighters serving Todos Santos, BCS. Learn about our equipment needs and how to help."
+    }
+  },
+  "nav": {
+    "needs": "Needs",
+    "transparency": "Transparency",
+    "events": "Events",
+    "about": "About Us",
+    "volunteers": "Volunteers",
+    "courses": "Courses",
+    "news": "News"
+  },
+  "home": {
+    "hero": {
+      "badge": "We need your help",
+      "headline": "Life-saving equipment in Todos Santos",
+      "description": "We are volunteers. Our equipment is donated by people like you. Every piece has a name, a cost, and a story.",
+      "cta_primary": "See urgent needs",
+      "cta_secondary": "Donate now"
+    },
+    "stats": {
+      "calls": "Calls attended",
+      "volunteers": "Active volunteers",
+      "donations": "Donations",
+      "years": "Years serving"
+    }
+  },
+  "needs": {
+    "title": "Equipment we need",
+    "subtitle": "Every specific piece, with its real cost and current status",
+    "priority": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "category": {
+      "epp": "Protective equipment",
+      "tools": "Rescue tools",
+      "vehicles": "Vehicles",
+      "medical": "Medical equipment",
+      "communications": "Communication",
+      "station": "Station",
+      "other": "Other"
+    },
+    "status": {
+      "open": "Open",
+      "partial": "Partial",
+      "fulfilled": "Fulfilled"
+    },
+    "progress": "{received} of {needed} fulfilled",
+    "donate_this": "Donate this equipment",
+    "donate_money": "Donate money",
+    "empty": "There are no open needs at this moment"
+  }
+}

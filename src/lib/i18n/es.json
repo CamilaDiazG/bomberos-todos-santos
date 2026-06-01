@@ -1,0 +1,66 @@
+{
+  "common": {
+    "donate": "Donar",
+    "learn_more": "Conocer más",
+    "loading": "Cargando...",
+    "error": "Error"
+  },
+  "meta": {
+    "home": {
+      "title": "Bomberos de Todos Santos | Protegemos a nuestra comunidad",
+      "description": "Bomberos voluntarios que sirven a Todos Santos, BCS. Conoce nuestras necesidades de equipo y cómo ayudar."
+    }
+  },
+  "nav": {
+    "needs": "Necesidades",
+    "transparency": "Transparencia",
+    "events": "Eventos",
+    "about": "Nosotros",
+    "volunteers": "Voluntarios",
+    "courses": "Cursos",
+    "news": "Noticias"
+  },
+  "home": {
+    "hero": {
+      "badge": "Necesitamos tu ayuda",
+      "headline": "Equipo que salva vidas en Todos Santos",
+      "description": "Somos voluntarios. Nuestro equipo lo dona gente como tú. Cada pieza tiene un nombre, un costo y una historia.",
+      "cta_primary": "Ver necesidades urgentes",
+      "cta_secondary": "Donar ahora"
+    },
+    "stats": {
+      "calls": "Llamadas atendidas",
+      "volunteers": "Voluntarios activos",
+      "donations": "Donaciones",
+      "years": "Años sirviendo"
+    }
+  },
+  "needs": {
+    "title": "Equipo que necesitamos",
+    "subtitle": "Cada pieza específica, con su costo real y estado actual",
+    "priority": {
+      "critical": "Crítica",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "category": {
+      "epp": "Equipo de protección",
+      "tools": "Herramientas de rescate",
+      "vehicles": "Vehículos",
+      "medical": "Equipo médico",
+      "communications": "Comunicación",
+      "station": "Estación",
+      "other": "Otros"
+    },
+    "status": {
+      "open": "Abierto",
+      "partial": "Parcial",
+      "fulfilled": "Cubierto"
+    },
+    "progress": "{received} de {needed} cubiertos",
+    "donate_this": "Donar este equipo",
+    "donate_money": "Donar dinero",
+    "empty": "No hay necesidades abiertas en este momento"
+  }
+}

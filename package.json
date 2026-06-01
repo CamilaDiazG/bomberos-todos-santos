@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "typecheck": "tsc --noEmit",
+  "db:types": "npx supabase gen types typescript --project-id urtshkspzchcnotshbld > src/types/database.ts"
+},
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@paypal/react-paypal-js": "^9.2.0",
