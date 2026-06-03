@@ -1,61 +1,65 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import createIntlMiddleware from 'next-intl/middleware'
-import { routing } from '@/lib/i18n/routing'
-import { createServerClient } from '@supabase/ssr'
+import { routing } from './lib/i18n/routing'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  // Saltar i18n para rutas de admin y API
-  if (pathname.startsWith('/admin') || pathname.startsWith('/api')) {
-    if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-      // Auth guard
-      const response = NextResponse.next()
-      const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-          cookies: {
-            getAll: () => request.cookies.getAll(),
-            setAll: (cookiesToSet) => {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                response.cookies.set(name, value, options)
-              )
-            },
+  // 1. Si la persona está intentando entrar a la zona de /admin...
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    
+    // Armamos un mini-cliente de Supabase especial para el Middleware
+    let supabaseResponse = NextResponse.next({ request: { headers: request.headers } })
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return request.cookies.get(name)?.value
           },
-        }
-      )
-
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        return NextResponse.redirect(new URL('/admin/login', request.url))
+          set(name: string, value: string, options: CookieOptions) {
+            request.cookies.set({ name, value, ...options })
+            supabaseResponse = NextResponse.next({
+              request: { headers: request.headers },
+            })
+            supabaseResponse.cookies.set({ name, value, ...options })
+          },
+          remove(name: string, options: CookieOptions) {
+            request.cookies.set({ name, value: '', ...options })
+            supabaseResponse = NextResponse.next({
+              request: { headers: request.headers },
+            })
+            supabaseResponse.cookies.set({ name, value: '', ...options })
+          },
+        },
       }
+    )
 
-      // Verificar rol de admin
-      const { data: admin } = await supabase
-        .from('admin_users')
-        .select('user_id')
-        .eq('user_id', user.id)
-        .single()
+    // Le preguntamos a Supabase: "¿Esta persona tiene sesión activa?"
+    const { data: { session } } = await supabase.auth.getSession()
 
-      if (!admin) {
-        await supabase.auth.signOut()
-        return NextResponse.redirect(new URL('/admin/login', request.url))
-      }
+    const isLoginPage = request.nextUrl.pathname === '/admin/login'
 
-      return response
+    // Si NO tiene sesión y no está en el login, ¡patealo al login!
+    if (!session && !isLoginPage) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
     }
-    return NextResponse.next()
+    
+    // Si SÍ tiene sesión y está en el login, mándalo directo al panel
+    if (session && isLoginPage) {
+      return NextResponse.redirect(new URL('/admin/needs', request.url))
+    }
+
+    return supabaseResponse
   }
 
-  // Aplicar i18n para rutas públicas
+  // 2. Si no es /admin, dejamos que next-intl maneje el idioma para la vista pública
   return intlMiddleware(request)
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)',
-  ]
+  // Ignoramos archivos estáticos para que el middleware no trabaje de más
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 }
