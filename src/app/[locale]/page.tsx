@@ -11,9 +11,11 @@ type EquipmentNeed = {
   category: string;
   estimated_cost_usd: number;
   current_amount_usd: number;
+  cover_image_url: string; // <-- Usamos tu columna existente
 }
 
 export default function PublicCatalogPage() {
+  const [isCheckingOut, setIsCheckingOut] = useState<string | null>(null)
   const [needs, setNeeds] = useState<EquipmentNeed[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
@@ -33,6 +35,40 @@ export default function PublicCatalogPage() {
 
     fetchNeeds()
   }, [])
+
+
+  const handleDonate = async (item: EquipmentNeed) => {
+    try {
+      setIsCheckingOut(item.id)
+      
+      // Llamamos a nuestra nueva ruta /api/checkout
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          equipmentId: item.id,
+          title: item.title_es,
+          price: item.estimated_cost_usd, // Para la prueba, cobraremos el total
+          category: item.category
+        }),
+      })
+
+      const data = await response.json()
+
+      // Si Stripe nos devuelve un link, redirigimos al usuario para allá
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Hubo un problema al iniciar el donativo.')
+    } finally {
+      setIsCheckingOut(null)
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -61,6 +97,23 @@ export default function PublicCatalogPage() {
               
               return (
                 <div key={item.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
+                  
+                  {/* 👇 NUEVO BLOQUE DE IMAGEN 👇 */}
+                  {item.cover_image_url ? (
+                    <div className="h-48 w-full bg-gray-200 overflow-hidden">
+                      <img 
+                        src={item.cover_image_url} 
+                        alt={item.title_es}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-48 w-full bg-gray-100 flex items-center justify-center">
+                      <span className="text-gray-400 text-sm font-medium">Sin imagen</span>
+                    </div>
+                  )}
+                  {/* 👆 FIN DEL BLOQUE DE IMAGEN 👆 */}
+
                   <div className="p-6 flex-grow">
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="text-xl font-bold text-zinc-900">{item.title_es}</h3>
@@ -92,8 +145,12 @@ export default function PublicCatalogPage() {
                   
                   {/* Botón de Acción */}
                   <div className="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                    <button className="w-full bg-zinc-900 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 shadow-sm">
-                      Donar para este equipo
+                    <button 
+                      onClick={() => handleDonate(item)}
+                      disabled={isCheckingOut === item.id}
+                      className="w-full bg-zinc-900 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 shadow-sm disabled:opacity-50"
+                    >
+                      {isCheckingOut === item.id ? 'Procesando...' : 'Donar para este equipo'}
                     </button>
                   </div>
                 </div>
