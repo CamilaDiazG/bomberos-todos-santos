@@ -26,6 +26,24 @@ export default function Navbar() {
               Catálogo
             </Link>
 
+            {/* Este ya está activo porque acabamos de hacer la pantalla */}
+            <Link
+              href="/eventos"
+              className="text-gray-300 hover:text-white font-medium transition-colors"
+            >
+              Eventos
+            </Link>
+
+            {/* ⚠️ Mantenlo comentado hasta que Emiliano termine su parte ⚠️ */}
+            {/* 
+            <Link
+              href="/voluntarios"
+              className="text-gray-300 hover:text-white font-medium transition-colors"
+            >
+              Voluntarios
+            </Link> 
+            */}
+
             <Link
               href="/about"
               className="text-gray-300 hover:text-white font-medium transition-colors"
