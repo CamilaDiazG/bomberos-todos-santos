@@ -35,23 +35,6 @@
       "years": "Años sirviendo"
     }
   },
-  "footer": {
-    "nav": {
-      "title": "Navegación",
-      "home": "Inicio",
-      "services": "Servicios",
-      "donate": "Donar",
-      "contact": "Contacto"
-    },
-    "transfer": {
-      "title": "Transferencias",
-      "bank": "Banco",
-      "beneficiary": "Beneficiario"
-    },
-    "contact": "Contacto",
-    "rights": "Patronato de Bomberos Todos Santos. Todos los derechos reservados.",
-    "social": "Síguenos"
-  },
   "needs": {
     "title": "Equipo que necesitamos",
     "subtitle": "Cada pieza específica, con su costo real y estado actual",
