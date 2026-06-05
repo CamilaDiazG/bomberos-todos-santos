@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/lib/i18n/routing'
 
 export default function Navbar() {
   return (
@@ -8,7 +8,7 @@ export default function Navbar() {
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center gap-2">
               <img
-                src="/logo-bomberos-todos-santos-removebg-preview.png" //
+                src="/logo-bomberos-todos-santos-removebg-preview.png"
                 alt="Bomberos Todos Santos"
                 className="h-9 w-9 object-contain"
               />
@@ -31,6 +31,13 @@ export default function Navbar() {
               className="text-gray-300 hover:text-white font-medium transition-colors"
             >
               Nosotros
+            </Link>
+
+            <Link
+              href="/donate"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-1.5 rounded-lg transition-colors text-sm"
+            >
+              Donar
             </Link>
 
             <Link
