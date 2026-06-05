@@ -26,7 +26,7 @@ export default function DonateSection({ item }: { item: any }) {
         body: JSON.stringify({
           equipmentId: item.id,
           title: item.title_es,
-          price: Number(amount), // 👈 Aquí mandamos lo que el usuario escribió
+          price: Number(amount), //  Aquí mandamos lo que el usuario escribió
           category: item.category
         }),
       })
@@ -46,11 +46,11 @@ export default function DonateSection({ item }: { item: any }) {
   }
 
   return (
-    <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 mt-auto">
+    <div className="w-full">
       {!showInput ? (
         <button 
           onClick={() => setShowInput(true)}
-          className="w-full bg-zinc-900 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 shadow-sm"
+          className="w-full h-14 bg-zinc-900 hover:bg-red-600 text-white font-bold px-4 rounded-xl transition-colors duration-200 shadow-sm"
         >
           Donar para este equipo
         </button>

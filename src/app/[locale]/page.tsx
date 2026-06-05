@@ -4,17 +4,16 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import DonateSection from '@/components/donateSection'
 
-// Reciclamos nuestro tipo, pero enfocado en lo que verá el público
 type EquipmentNeed = {
   id: string;
   title_es: string;
   description_es: string;
   category: string;
-  estimated_cost_usd: number; // Precio de 1 solo equipo
-  current_amount_usd: number; // Dinero donado hasta ahora
+  estimated_cost_usd: number;
+  current_amount_usd: number;
   cover_image_url: string; 
-  quantity_needed: number;    // Meta física
-  quantity_received: number;  // Equipos donados en especie
+  quantity_needed: number;
+  quantity_received: number;
 }
 
 export default function PublicCatalogPage() {
@@ -60,15 +59,21 @@ export default function PublicCatalogPage() {
           /* Cuadrícula de Tarjetas */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {needs.map((item) => {
-              // Calculamos el costo total multiplicando costo unitario por la cantidad de equipos
+              // Cálculos financieros
               const totalCost = item.estimated_cost_usd * item.quantity_needed
-              // Calculamos el porcentaje basado en la meta total
-              const progress = Math.min((item.current_amount_usd / totalCost) * 100, 100) || 0
-              
+              const financialProgress = Math.min((item.current_amount_usd / totalCost) * 100, 100) || 0
+
+              // Link a tu formulario / encuesta (¡Reemplaza este link por el real de tu Google Form / Typeform!)
+              const whatsappNumber = "5216120000000"
+              const whatsappMessage = encodeURIComponent(
+                `Hola, tengo este equipo para donar: ${item.title_es}`
+              )
+              const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
+
               return (
                 <div key={item.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
                   
-                  {/* BLOQUE DE IMAGEN MEJORADO */}
+                  {/* BLOQUE DE IMAGEN */}
                   {item.cover_image_url ? (
                     <div className="h-56 w-full bg-white flex items-center justify-center p-4 border-b border-gray-100 overflow-hidden">
                       <img 
@@ -96,40 +101,52 @@ export default function PublicCatalogPage() {
                       {item.description_es}
                     </p>
                     
-                    {/* PANEL DESGLOSADO DE MÉTRICAS */}
-                    <div className="bg-zinc-50 rounded-xl p-4 mb-6 border border-zinc-100">
-                      <div className="flex justify-between items-center mb-2 pb-2 border-b border-zinc-200 border-dashed text-sm">
-                        <span className="text-zinc-500 font-medium">Costo unitario</span>
-                        <span className="font-semibold text-zinc-800">${item.estimated_cost_usd} USD</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
+                    {/* PANEL DE MÉTRICAS UNIFICADO */}
+                    <div className="bg-zinc-50 rounded-xl p-4 mb-6 border border-zinc-100 mt-auto">
+                      
+                      {/* Meta Física */}
+                      <div className="flex justify-between items-center mb-4 pb-4 border-b border-zinc-200 border-dashed text-sm">
                         <span className="text-zinc-500 font-medium">Equipos conseguidos</span>
                         <span className="font-bold text-zinc-900 bg-white px-2 py-0.5 rounded shadow-sm border border-zinc-100">
                           {item.quantity_received} / {item.quantity_needed}
                         </span>
                       </div>
+                      
+                      {/* Meta Financiera */}
+                      <div>
+                        <div className="flex justify-between text-xs mb-2">
+                          <span className="font-bold text-zinc-400 uppercase tracking-wider">Recaudación</span>
+                          <span className="font-bold text-zinc-900">
+                            ${item.current_amount_usd} / ${totalCost} USD
+                          </span>
+                        </div>
+                        <div className="w-full bg-zinc-200 rounded-full h-2">
+                          <div 
+                            className="bg-red-600 h-2 rounded-full transition-all duration-1000 ease-out" 
+                            style={{ width: `${financialProgress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
                     </div>
                     
-                    {/* SECCIÓN DE META FINANCIERA */}
-                    <div className="mt-auto">
-                      <div className="flex justify-between text-xs mb-2">
-                        <span className="font-bold text-zinc-400 uppercase tracking-wider">Recaudación</span>
-                        <span className="font-bold text-zinc-900">
-                          ${item.current_amount_usd} / ${totalCost} USD
-                        </span>
-                      </div>
-                      <div className="w-full bg-zinc-100 rounded-full h-2">
-                        <div 
-                          className="bg-red-600 h-2 rounded-full transition-all duration-1000 ease-out" 
-                          style={{ width: `${progress}%` }}
-                        ></div>
-                      </div>
+                    {/* 👇 ZONA DE BOTONES 👇 */}
+                    <div className="flex flex-col gap-3">
+                      {/* Botón Principal (Stripe) */}
+                      <DonateSection item={item} />
+                      
+                      {/* Botón Secundario (Encuesta / Especie) */}
+                      <a 
+                        href={whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full h-14 inline-flex justify-center items-center bg-white border-2 border-zinc-900 hover:bg-zinc-50 text-zinc-900 font-bold px-4 rounded-xl transition-colors duration-200 text-sm shadow-sm"
+                      >
+                        Tengo este equipo
+                      </a>
                     </div>
+
                   </div>
-                  
-                  {/* Botón de Acción Extraído */}
-                  <DonateSection item={item} />
-                  
                 </div>
               )
             })}
@@ -141,7 +158,8 @@ export default function PublicCatalogPage() {
             Aún no hay necesidades publicadas.
           </div>
         )}
+        
       </div>
     </div>
   )
-} 
+}
