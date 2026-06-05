@@ -35,6 +35,23 @@
       "years": "Years serving"
     }
   },
+  "footer": {
+    "nav": {
+      "title": "Navigation",
+      "home": "Home",
+      "services": "Services",
+      "donate": "Donate",
+      "contact": "Contact"
+    },
+    "transfer": {
+      "title": "Bank Transfer",
+      "bank": "Bank",
+      "beneficiary": "Beneficiary"
+    },
+    "contact": "Contact",
+    "rights": "Patronato de Bomberos Todos Santos. All rights reserved.",
+    "social": "Follow us"
+  },
   "needs": {
     "title": "Equipment we need",
     "subtitle": "Every specific piece, with its real cost and current status",
