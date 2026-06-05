@@ -18,9 +18,7 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      console.log("Intentando login con URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
-    
-    // Intentamos iniciar sesión con Supabase...
+      // Intentamos iniciar sesión con Supabase...
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,

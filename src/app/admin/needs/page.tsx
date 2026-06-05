@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
 
 // Actualizamos el tipo para incluir ABSOLUTAMENTE TODO lo que necesita tu BD y el catálogo público
 type EquipmentNeed = {
@@ -22,6 +23,7 @@ export default function AdminNeedsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const supabase = createClient()
+  const router = useRouter()
 
   // Estados del Formulario
   const [title, setTitle] = useState('')
@@ -117,10 +119,24 @@ export default function AdminNeedsPage() {
     }
   }
 
+
+    // Función para cerrar sesión
+    const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/admin/login')
+    router.refresh()
+  }
+
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-zinc-900">Inventario de Necesidades</h1>
+        <button 
+          onClick={handleLogout} 
+          className="text-sm font-medium text-zinc-500 hover:text-red-600 transition"
+        >
+         Cerrar Sesión
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
