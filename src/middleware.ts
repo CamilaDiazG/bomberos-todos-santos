@@ -60,6 +60,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Ignoramos archivos estáticos para que el middleware no trabaje de más
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  // Le agregamos |.*\..* para que ignore todos los archivos estáticos (.png, .jpg, etc.)
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)']
 }
