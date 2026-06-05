@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-// Inicializamos Stripe con tu llave secreta del .env
+// Inicializamos Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-05-27.dahlia', // Actualizado a la versión que exige tu librería
+  apiVersion: '2026-05-27.dahlia', // Actualizado a la versión que exige la librería
 })
 
 export async function POST(request: Request) {
