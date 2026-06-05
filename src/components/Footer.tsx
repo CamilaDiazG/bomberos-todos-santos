@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n/routing'
 import { MapPin, Phone, Mail } from 'lucide-react'
 
 export function Footer() {
@@ -37,7 +37,10 @@ export function Footer() {
               <Link href="/" className="text-sm text-gray-400 transition-colors hover:text-red-600">
                 {t('nav.home')}
               </Link>
-<Link href="/#donate" className="text-sm text-gray-400 transition-colors hover:text-red-600">
+              <Link href="/about" className="text-sm text-gray-400 transition-colors hover:text-red-600">
+                {t('nav.about')}
+              </Link>
+              <Link href="/donate" className="text-sm text-gray-400 transition-colors hover:text-red-600">
                 {t('nav.donate')}
               </Link>
               <Link href="/#contact" className="text-sm text-gray-400 transition-colors hover:text-red-600">
