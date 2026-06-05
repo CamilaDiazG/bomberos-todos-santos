@@ -62,5 +62,12 @@
     "donate_this": "Donate this equipment",
     "donate_money": "Donate money",
     "empty": "There are no open needs at this moment"
+  },
+  "success": {
+    "title": "Thank you for your donation!",
+    "subtitle": "Your support makes a real difference for the firefighters of Todos Santos.",
+    "context": "Your contribution towards \"{item}\" has been received.",
+    "cta": "See more needs",
+    "meta_title": "Donation received | Todos Santos Fire Dept."
   }
 }

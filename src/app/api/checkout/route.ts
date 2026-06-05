@@ -8,11 +8,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: Request) {
   try {
-    //Recibimos los datos que nos mandará el botón de "Donar"
     const body = await request.json()
-    const { equipmentId, title, price, category } = body
+    const { equipmentId, title, price, category, locale } = body
 
-    //Le pedimos a Stripe que cree una "Sesión de Pago"
+    const validLocales = ['es', 'en']
+    const safeLocale = validLocales.includes(locale) ? locale : 'es'
+    const origin = request.headers.get('origin') ?? ''
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -23,19 +25,14 @@ export async function POST(request: Request) {
               name: `Donación para: ${title}`,
               description: `Categoría: ${category}`,
             },
-            // Stripe maneja los centavos, así que multiplicamos por 100
-            unit_amount: Math.round(price * 100), 
+            unit_amount: Math.round(price * 100),
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      // ¿A dónde mandamos al usuario después de pagar (o cancelar)?
-      // Usamos el header 'origin' para saber si estamos en localhost o ya en producción
-      success_url: `${request.headers.get('origin')}/en?success=true&equipment=${equipmentId}`,
-      cancel_url: `${request.headers.get('origin')}/en?canceled=true`,
-      
-      // Metadatos ocultos que usaremos luego para el Webhook
+      success_url: `${origin}/${safeLocale}/success?equipmentId=${equipmentId}&title=${encodeURIComponent(title)}`,
+      cancel_url: `${origin}/${safeLocale}?canceled=true`,
       metadata: {
         equipmentId: equipmentId,
       },

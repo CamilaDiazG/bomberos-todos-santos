@@ -62,5 +62,12 @@
     "donate_this": "Donar este equipo",
     "donate_money": "Donar dinero",
     "empty": "No hay necesidades abiertas en este momento"
+  },
+  "success": {
+    "title": "¡Gracias por tu donativo!",
+    "subtitle": "Tu apoyo hace la diferencia para los bomberos de Todos Santos.",
+    "context": "Tu aportación para \"{item}\" fue recibida con éxito.",
+    "cta": "Ver más necesidades",
+    "meta_title": "Donativo recibido | Bomberos Todos Santos"
   }
 }

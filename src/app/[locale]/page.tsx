@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DonateSection from '@/components/donateSection'
 
@@ -19,6 +20,10 @@ type EquipmentNeed = {
 export default function PublicCatalogPage() {
   const [needs, setNeeds] = useState<EquipmentNeed[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const searchParams = useSearchParams()
+  const [showCanceledBanner, setShowCanceledBanner] = useState(
+    () => searchParams.get('canceled') === 'true'
+  )
   const supabase = createClient()
 
   useEffect(() => {
@@ -41,6 +46,18 @@ export default function PublicCatalogPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto">
         
+        {showCanceledBanner && (
+          <div className="mb-6 bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 flex justify-between items-center text-sm text-yellow-800">
+            <span>No se realizó ningún cargo. Puedes intentarlo de nuevo cuando quieras.</span>
+            <button
+              onClick={() => setShowCanceledBanner(false)}
+              className="ml-4 font-bold text-yellow-700 hover:text-yellow-900"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Encabezado del catálogo */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold text-zinc-900 sm:text-5xl tracking-tight">

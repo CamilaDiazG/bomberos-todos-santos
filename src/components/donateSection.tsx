@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useLocale } from 'next-intl'
 
 // Definimos lo que recibe el componente (puedes ajustar el tipo si lo tienes exportado)
 export default function DonateSection({ item }: { item: any }) {
   const [showInput, setShowInput] = useState(false)
   const [amount, setAmount] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const locale = useLocale()
 
   const handleCheckout = async () => {
     // Validación básica: mínimo 10 dólares/pesos
@@ -26,8 +28,9 @@ export default function DonateSection({ item }: { item: any }) {
         body: JSON.stringify({
           equipmentId: item.id,
           title: item.title_es,
-          price: Number(amount), //  Aquí mandamos lo que el usuario escribió
-          category: item.category
+          price: Number(amount),
+          category: item.category,
+          locale,
         }),
       })
 
