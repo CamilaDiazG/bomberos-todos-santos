@@ -3,6 +3,7 @@ import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/lib/i18n/routing'
 import Navbar from '@/components/Navbar' // Tu nuevo Navbar
+import { Footer } from '@/components/Footer'
 import '@/app/globals.css' // Importación única de tus estilos
 
 export default async function LocaleLayout({
@@ -33,10 +34,7 @@ export default async function LocaleLayout({
             {children}
           </main>
 
-          {/* FOOTER (Que Karlo va a rehacer y dejar pro) */}
-          <footer className="py-6 text-center border-t border-gray-200 bg-white text-sm text-gray-500">
-            © {new Date().getFullYear()} Patronato de Bomberos Todos Santos.
-          </footer>
+          <Footer />
 
         </NextIntlClientProvider>
       </body>
