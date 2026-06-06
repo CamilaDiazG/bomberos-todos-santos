@@ -169,10 +169,10 @@ function DonationInner({ item }: InnerProps) {
   // ── Main form ───────────────────────────────────────────────────────────────
   return (
     <form onSubmit={handleSubmit} className="bg-[#f2ede6] px-4 py-10">
-      <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6 items-start">
 
         {/* ── PANEL IZQUIERDO ──────────────────────────────── */}
-        <div className="flex-1 flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
 
           {/* Cabecera */}
           <div>
@@ -363,7 +363,7 @@ function DonationInner({ item }: InnerProps) {
         </div>
 
         {/* ── PANEL DERECHO ────────────────────────────────── */}
-        <div className="w-full lg:w-80 lg:sticky lg:top-24 self-start flex flex-col gap-4">
+        <div className="sticky top-24 flex flex-col gap-4">
 
           {/* Resumen (siempre visible) */}
           <div className="bg-zinc-900 rounded-2xl p-6 text-white">
@@ -468,8 +468,12 @@ function DonationInner({ item }: InnerProps) {
           {!isDirected && (
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-zinc-100">
               <div className="flex items-start gap-3 mb-4">
-                <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shrink-0">
-                  <Flame className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0">
+                  <img
+                    src="/logo-bomberos-todos-santos-removebg-preview.png"
+                    alt="Bomberos Todos Santos"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-amber-500 uppercase tracking-wide mb-1">
