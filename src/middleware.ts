@@ -6,6 +6,12 @@ import { routing } from './lib/i18n/routing'
 const intlMiddleware = createIntlMiddleware(routing)
 
 export async function middleware(request: NextRequest) {
+  const localeAdminMatch = request.nextUrl.pathname.match(/^\/(es|en)(\/admin(?:\/.*)?$)/)
+
+  if (localeAdminMatch) {
+    return NextResponse.redirect(new URL(localeAdminMatch[2], request.url))
+  }
+
   // 1. Si la persona está intentando entrar a la zona de /admin...
   if (request.nextUrl.pathname.startsWith('/admin')) {
     

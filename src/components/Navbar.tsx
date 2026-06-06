@@ -1,4 +1,5 @@
 import { Link } from '@/lib/i18n/routing'
+import NextLink from 'next/link'
 
 export default function Navbar() {
   return (
@@ -58,12 +59,12 @@ export default function Navbar() {
               Donar
             </Link>
 
-            <Link
+            <NextLink
               href="/admin/login"
               className="text-zinc-600 hover:text-red-500 text-sm font-medium transition-colors"
             >
               Admin
-            </Link>
+            </NextLink>
           </div>
         </div>
       </div>
